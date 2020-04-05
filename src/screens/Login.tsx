@@ -24,7 +24,7 @@ class Login extends Component<LoginProps, LoginState> {
 	}
 
 	forgotPassword = () => {
-
+		this.props.navigation.navigate('ForgotPassword');
 	}
 
 	onEmailChange = () => {

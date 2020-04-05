@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 class ForgotPassword extends Component {
 	render() {
 		return (
-			<View>ForgotPassword Screen</View>
+			<View>
+				<Text>Forgot Password</Text>
+			</View>
 		)
 	}
 }
