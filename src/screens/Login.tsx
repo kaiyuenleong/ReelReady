@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Text, Image, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { LoginScreenRouteProp, LoginScreenNavigationProp } from "..//navigator/types";
-
+import { connect } from "react-redux";
+import { emailChanged, passwordChanged, loginUser } from "../actions";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Login";
 
@@ -9,6 +10,10 @@ interface LoginProps {
 	email: string;
 	password: string;
 	error: string;
+	loading: boolean;
+	emailChanged: any;
+	passwordChanged: any;
+	loginUser: any;
 	route: LoginScreenRouteProp;
 	navigation: LoginScreenNavigationProp;
 }
@@ -27,16 +32,17 @@ class Login extends Component<LoginProps, LoginState> {
 		this.props.navigation.navigate('ForgotPassword');
 	}
 
-	onEmailChange = () => {
-
+	onEmailChange = (text: string) => {
+		this.props.emailChanged(text);
 	}
 
-	onPasswordChange = () => {
-
+	onPasswordChange = (text: string) => {
+		this.props.passwordChanged(text);
 	}
 
 	onButtonPress = () => {
-		console.log('button pressed');
+		const { email, password } = this.props;
+		this.props.loginUser({ email, password });
 	}
 
 	renderButton() {
@@ -92,4 +98,9 @@ class Login extends Component<LoginProps, LoginState> {
 	}
 }
 
-export default Login;
+const mapStateToProps = ({ auth }: any) => {
+	const { email, password, error, loading } = auth;
+	return { email, password, error, loading };
+}
+
+export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(Login);
