@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, Image, View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import { Text, Image, View, TouchableOpacity } from "react-native";
 import { LoginScreenRouteProp, LoginScreenNavigationProp } from "..//navigator/types";
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
@@ -11,18 +11,16 @@ interface LoginProps {
 	password: string;
 	error: string;
 	loading: boolean;
-	emailChanged: any;
-	passwordChanged: any;
+
+	emailChanged: (text: string) => {type: string, payload: string};
+	passwordChanged: (text: string) => {type: string, payload: string};
 	loginUser: any;
+	
 	route: LoginScreenRouteProp;
 	navigation: LoginScreenNavigationProp;
 }
 
-interface LoginState {
-
-}
-
-class Login extends Component<LoginProps, LoginState> {
+class Login extends Component<LoginProps> {
 
 	register = () => {
 		this.props.navigation.navigate('Registration');
@@ -45,6 +43,7 @@ class Login extends Component<LoginProps, LoginState> {
 		this.props.loginUser({ email, password });
 	}
 
+	// Need to change button to loading circle when checking authentication?
 	renderButton() {
 		return (
 			<Button onPress={this.onButtonPress}>SIGN IN</Button>
@@ -54,7 +53,7 @@ class Login extends Component<LoginProps, LoginState> {
 	render() {
 		return (
 			<Gradient>
-				<KeyboardAvoidingView behavior="padding" style={styles.contentContainer}>
+				<View style={styles.contentContainer}>
 					<View style={styles.imageContainer}>
 						<Image
 							source={require('../../assets/images/logo_w_text.png')}
@@ -78,7 +77,6 @@ class Login extends Component<LoginProps, LoginState> {
 					<View style={styles.buttonContainer}>
 						<View style={styles.textContainer}>
 							<Text style={styles.errorText}>
-								{/* Error message should disappear after a short while or if a button is pressed */}
 								{this.props.error}
 							</Text>
 							<TouchableOpacity onPress={this.forgotPassword}>
@@ -92,14 +90,16 @@ class Login extends Component<LoginProps, LoginState> {
 							<Text style={styles.registrationText}>New User? Create an Account</Text>
 						</TouchableOpacity>
 					</View>
-				</KeyboardAvoidingView>
+				</View>
 			</Gradient>
 		)
 	}
 }
 
-const mapStateToProps = ({ auth }: any) => {
-	const { email, password, error, loading } = auth;
+// Called everytime the store state changes. Pulls objects of data required. 
+// Updates component's props.
+const mapStateToProps = (state: any) => {
+	const { email, password, error, loading } = state;
 	return { email, password, error, loading };
 }
 
