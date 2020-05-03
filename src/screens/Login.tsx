@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { Text, Image, View, TouchableOpacity } from "react-native";
-import { LoginScreenRouteProp, LoginScreenNavigationProp } from "..//navigator/types";
+import { LoginScreenRouteProp, LoginScreenNavigationProp } from "../navigator/types";
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Login";
+
+interface LoginAction {
+	type: string;
+	payload: string;
+}
 
 interface LoginProps {
 	email: string;
@@ -12,8 +17,8 @@ interface LoginProps {
 	error: string;
 	loading: boolean;
 
-	emailChanged: (text: string) => {type: string, payload: string};
-	passwordChanged: (text: string) => {type: string, payload: string};
+	emailChanged: (text: string) => LoginAction;
+	passwordChanged: (text: string) => LoginAction;
 	loginUser: any;
 	
 	route: LoginScreenRouteProp;
@@ -96,10 +101,8 @@ class Login extends Component<LoginProps> {
 	}
 }
 
-// Called everytime the store state changes. Pulls objects of data required. 
-// Updates component's props.
-const mapStateToProps = (state: any) => {
-	const { email, password, error, loading } = state;
+const mapStateToProps = (auth: any) => {
+	const { email, password, error, loading } = auth;
 	return { email, password, error, loading };
 }
 
