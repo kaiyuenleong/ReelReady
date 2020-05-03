@@ -3,12 +3,12 @@ import { TextInput, View, StyleSheet } from 'react-native';
 
 interface InputProps {
     value: string;
-    onChangeText: () => void;
+    onChangeText: ((text: string) => void);
     placeholder: string;
     secureTextEntry?: boolean;
 }
 
-const Input: React.StatelessComponent<InputProps> = ({ value, onChangeText, placeholder, secureTextEntry }) => {
+const Input: React.FC<InputProps> = ({ value, onChangeText, placeholder, secureTextEntry }) => {
   const { inputStyle, containerStyle } = styles;
 
   return (

@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 interface GradientProps {
 }
 
-const Gradient: React.StatelessComponent<GradientProps> = ({children}) => {
+const Gradient: React.FC<GradientProps> = ({children}) => {
 	const { viewStyle, linearGradientStyle } = styles;
 
 	return (

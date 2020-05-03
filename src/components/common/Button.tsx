@@ -6,7 +6,7 @@ interface ButtonProps {
 	onPress: () => void;
 }
 
-const Button: React.StatelessComponent<ButtonProps> = ({children, onPress}) => {
+const Button: React.FC<ButtonProps> = ({children, onPress}) => {
 	const { buttonStyle, textStyle } = styles;
 
 	return (
