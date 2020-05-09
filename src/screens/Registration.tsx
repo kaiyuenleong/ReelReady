@@ -104,9 +104,9 @@ class Registration extends Component<RegistrationProps> {
 	}
 }
 
-const mapStateToProps = (state: any) => {
-	const { name, email, password, confirmPassword, error } = state;
-	return { name, email, password, confirmPassword, error };
+const mapStateToProps = ({ registration }: any) => {
+	const { name, email, password, confirmPassword, error, loading } = registration ;
+	return { name, email, password, confirmPassword, error, loading };
 }
 
 export default connect(

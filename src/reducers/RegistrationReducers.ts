@@ -1,10 +1,4 @@
 import {
-  EMAIL_CHANGED,
-  PASSWORD_CHANGED,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL,
-  LOGIN_USER,
-
   NEW_NAME_CHANGED,
   NEW_EMAIL_CHANGED,
   NEW_PASSWORD_CHANGED,
@@ -14,7 +8,7 @@ import {
   REGISTER_USER
 } from '../actions/types';
 
-const INITIAL_STATE = {
+const REGISTRATION_STATE = {
   name: '',
   email: '',
   password: '',
@@ -24,29 +18,23 @@ const INITIAL_STATE = {
   loading: false
 };
 
-export default (state = INITIAL_STATE, action: any) => {
+export default (state = REGISTRATION_STATE, action: any) => {
   switch (action.type) {
     case NEW_NAME_CHANGED:
       return { ...state, name: action.payload };
-    case EMAIL_CHANGED || NEW_EMAIL_CHANGED:
+    case NEW_EMAIL_CHANGED:
       return { ...state, email: action.payload };
-    case PASSWORD_CHANGED || NEW_PASSWORD_CHANGED:
+    case NEW_PASSWORD_CHANGED:
       return { ...state, password: action.payload };
     case NEW_CONFIRM_PASSWORD_CHANGED:
       return { ...state, confirmPassword: action.payload };
-    case LOGIN_USER:
-      return { ...state, loading: true, error: '' };
-    case LOGIN_USER_SUCCESS:
-      return { ...state, ...INITIAL_STATE, user: action.payload };
-    case LOGIN_USER_FAIL:
-      return { ...state, error: "Invalid email or password.", password: "", loading: false };
     case REGISTER_USER:
       return { ...state, loading: true, error: '' };
     case REGISTER_USER_SUCCESS:
       // What to do here?
-      break;
+      return { ...state, ...REGISTRATION_STATE, user: action.payload };
     case REGISTER_USER_FAIL:
-      return { ...state, error: action.payload, password: "", loading: false }
+      return { ...state, error: action.payload, password: "", confirmPassword: "", loading: false }
     default:
       return state;
   }

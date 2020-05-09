@@ -1,12 +1,7 @@
 import axios from "axios";
 import deviceStorage from "../services/deviceStorage";
+import { API_URL } from "../services/API";
 import {
-  EMAIL_CHANGED,
-  PASSWORD_CHANGED,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL,
-  LOGIN_USER,
-
   NEW_NAME_CHANGED,
   NEW_EMAIL_CHANGED,
   NEW_PASSWORD_CHANGED,
@@ -20,39 +15,7 @@ interface Registration {
   name: string;
   email: string;
   password: string;
-}
-
-const emailChanged = (email: string) => {
-  return {
-    type: EMAIL_CHANGED,
-    payload: email
-  }
-}
-
-const passwordChanged = (password: string) => {
-  return {
-    type: PASSWORD_CHANGED,
-    payload: password
-  }
-}
-
-const loginUser = ({ email, password }: any) => {
-  return (dispatch: any) => {
-    dispatch({ type: LOGIN_USER });
-
-    // Call API to login user here
-  }
-}
-
-const loginUserFail = (dispatch: any) => {
-  dispatch({ type: LOGIN_USER_FAIL });
-}
-
-const loginUserSuccess = (dispatch: any, user: any) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-  });
+  confirmPassword: string;
 }
 
 const newNameChanged = (name: string) => {
@@ -83,24 +46,24 @@ const newConfirmPasswordChanged = (password: string) => {
   }
 }
 
-const registerUser = ({ name, email, password, confirmPassword }: any) => {
+const registerUser = ({ name, email, password, confirmPassword }: Registration) => {
   return (dispatch: any) => {
     dispatch({ type: REGISTER_USER });
 
     if (password !== confirmPassword) {
-      dispatch({ type: REGISTER_USER_FAIL, payload: "The provided passwords do not match."})
+      dispatch({ type: REGISTER_USER_FAIL, payload: "The provided passwords do not match."});
     } else {
       // Call API to register user here
-      axios.post(`${process.env.API_URL}/signup`, {
-        body: {
-          name,
-          email,
-          password,
-        }
+      console.log("posting to axios");
+      axios.post("http://192.168.0.5:3000/" + "signup", {
+        name,
+        email,
+        password
       }).then((res) => {
-        // Save JWT Response Here
         deviceStorage.saveItem("token_id", res.data.authToken);
+        dispatch({ type: REGISTER_USER_SUCCESS, payload: "set user" });
       }).catch((error) => {
+        console.log(error);
         dispatch({ type: REGISTER_USER_FAIL, payload: error });
       })
     }
@@ -108,12 +71,6 @@ const registerUser = ({ name, email, password, confirmPassword }: any) => {
 }
 
 export {
-  emailChanged, 
-  passwordChanged,
-  loginUser,
-  loginUserFail,
-  loginUserSuccess,
-
   newNameChanged,
   newEmailChanged,
   newPasswordChanged,

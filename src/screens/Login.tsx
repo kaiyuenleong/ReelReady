@@ -101,8 +101,8 @@ class Login extends Component<LoginProps> {
 	}
 }
 
-const mapStateToProps = (auth: any) => {
-	const { email, password, error, loading } = auth;
+const mapStateToProps = ({ login }: any) => {
+	const { email, password, error, loading } = login;
 	return { email, password, error, loading };
 }
 
