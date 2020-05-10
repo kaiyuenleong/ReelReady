@@ -7,25 +7,25 @@ import {
 } from "../actions/types";
 
 const LOGIN_STATE = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   user: null,
-  error: '',
+  error: "",
   loading: false
 };
 
 export default (state = LOGIN_STATE, action: any) => {
   switch (action.type) {
     case EMAIL_CHANGED:
-      return { ...state, email: action.payload };
+      return { ...state, email: action.payload, error: "" };
     case PASSWORD_CHANGED:
-      return { ...state, password: action.payload }
+      return { ...state, password: action.payload, error: "" }
     case LOGIN_USER_SUCCESS:
       return { ...state, ...LOGIN_STATE, user: action.payload };
     case LOGIN_USER_FAIL:
       return { ...state, error: action.payload, password: "", loading: false };
     case LOGIN_USER:
-      return { ...state, loading: true, error: '' };
+      return { ...state, loading: true, error: "" };
     default:
       return state;
   }

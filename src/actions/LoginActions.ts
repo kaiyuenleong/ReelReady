@@ -33,7 +33,7 @@ const loginUser = ({ email, password }: Login) => {
     dispatch({ type: LOGIN_USER });
 
     if (!email || !password) {
-      dispatch({ type: LOGIN_USER_FAIL, payload: "An email and password must be provided."});
+      dispatch({ type: LOGIN_USER_FAIL, payload: "Invalid email or password."});
     }
 
     // Call API to login user here

@@ -15,8 +15,7 @@ const styles = StyleSheet.create({
   loaderStyle: {
     flex: 1,
     justifyContent: "center",
-    width: 10,
-    height: 10
+    alignItems: "center"
   }
 });
 

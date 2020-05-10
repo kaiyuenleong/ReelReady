@@ -68,30 +68,39 @@ class Login extends Component<LoginProps> {
 									style={styles.image}
 								/>
 							</View>
-							<View style={styles.inputContainer}>
-								<Input
-									placeholder="EMAIL"
-									onChangeText={this.onEmailChange}
-									value={this.props.email}
-								/>
-								<Input
-									secureTextEntry
-									placeholder="PASSWORD"
-									onChangeText={this.onPasswordChange}
-									value={this.props.password}
-								/>
-								<View style={styles.textContainer}>
-									<Text style={styles.errorText}>Error Message</Text>
-									<TouchableOpacity onPress={this.forgotPassword}>
-										<Text style={styles.forgotPasswordText}>
-											Forgot password?
+							<View style={styles.centerContainer}>
+								<View style={styles.commonContainer}>
+									<View style={styles.fieldsContainer}>
+										<Input
+											placeholder="EMAIL"
+											onChangeText={this.onEmailChange}
+											value={this.props.email}
+										/>
+										<Input
+											secureTextEntry
+											placeholder="PASSWORD"
+											onChangeText={this.onPasswordChange}
+											value={this.props.password}
+										/>
+									</View>
+									<View style={styles.textContainer}>
+										<Text style={styles.errorText}>{this.props.error}</Text>
+										<TouchableOpacity onPress={this.forgotPassword}>
+											<Text style={styles.forgotPasswordText}>
+												Forgot password?
+										</Text>
+										</TouchableOpacity>
+									</View>
+								</View>
+								<View style={styles.commonContainer}>
+									{this.renderButton()}
+									<TouchableOpacity onPress={this.register}>
+										<Text style={styles.registrationText}>
+											New user?  
+											<Text style={styles.registrationSubtext}> Create an account</Text>
 										</Text>
 									</TouchableOpacity>
 								</View>
-								{this.renderButton()}
-								<TouchableOpacity onPress={this.register}>
-									<Text style={styles.registrationText}>New User? Create an Account</Text>
-								</TouchableOpacity>
 							</View>
 						</View>
 					</TouchableWithoutFeedback>
