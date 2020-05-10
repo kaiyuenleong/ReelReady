@@ -17,6 +17,7 @@ const Input: React.FC<InputProps> = ({ value, onChangeText, placeholder, secureT
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         autoCorrect={false}
+        autoCompleteType="off"
         style={inputStyle}
         value={value}
         onChangeText={onChangeText}
