@@ -4,6 +4,7 @@ import { LoginScreenRouteProp, LoginScreenNavigationProp } from "../navigator/ty
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
 import { Gradient, Button, Input } from "../components/common";
+import { Images } from "../../assets/images";
 import styles from "../styles/Login";
 
 interface LoginAction {
@@ -63,7 +64,7 @@ class Login extends Component<LoginProps> {
 						<View style={styles.contentContainer}>
 							<View style={styles.imageContainer}>
 								<Image
-									source={require('../../assets/images/logo_w_text.png')}
+									source={Images.logoWithText}
 									resizeMode="contain"
 									style={styles.image}
 								/>

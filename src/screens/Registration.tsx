@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	KeyboardAvoidingView,
+	Keyboard,
+	Platform
+} from "react-native";
 // import * as ImagePicker from "expo-image-picker";
 import { RegistrationScreenRouteProp, RegistrationScreenNavigationProp } from "../navigator/types";
 import { connect } from "react-redux";
 import { newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser } from "../actions";
+import ImagePickerComponent from "../components/ImagePicker";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Registration";
 
@@ -64,48 +73,53 @@ class Registration extends Component<RegistrationProps> {
 	render() {
 		return (
 			<Gradient>
-				<View style={styles.contentContainer}>
-					{/* Need to add image picker */}
-					<View style={styles.inputContainer}>
-						<Input
-							placeholder="NAME"
-							onChangeText={this.onNameChange}
-							value={this.props.name}
-						/>
-						<Input
-							placeholder="EMAIL"
-							onChangeText={this.onEmailChange}
-							value={this.props.email}
-						/>
-						<Input
-							secureTextEntry
-							placeholder="PASSWORD"
-							onChangeText={this.onPasswordChange}
-							value={this.props.password}
-						/>
-						<Input
-							secureTextEntry
-							placeholder="CONFIRM PASSWORD"
-							onChangeText={this.onConfirmPasswordChange}
-							value={this.props.confirmPassword}
-						/>
-					</View>
-					<View style={styles.buttonContainer}>
-						{this.renderButton()}
-						<TouchableOpacity onPress={this.onCancel}>
-							<Text style={styles.cancelText}>
-								Cancel
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
+				<KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+						<View style={styles.contentContainer}>
+							<ImagePickerComponent />
+							<View style={styles.inputContainer}>
+								<Input
+									placeholder="NAME"
+									onChangeText={this.onNameChange}
+									value={this.props.name}
+								/>
+								<Input
+									placeholder="EMAIL"
+									onChangeText={this.onEmailChange}
+									value={this.props.email}
+								/>
+								<Input
+									secureTextEntry
+									placeholder="PASSWORD"
+									onChangeText={this.onPasswordChange}
+									value={this.props.password}
+								/>
+								<Input
+									secureTextEntry
+									placeholder="CONFIRM PASSWORD"
+									onChangeText={this.onConfirmPasswordChange}
+									value={this.props.confirmPassword}
+								/>
+								<Text style={styles.errorText}>{this.props.error}</Text>
+							</View>
+							<View style={styles.bottomContainer}>
+								{this.renderButton()}
+								<TouchableOpacity onPress={this.onCancel}>
+									<Text style={styles.cancelText}>
+										Cancel
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</TouchableWithoutFeedback>
+				</KeyboardAvoidingView>
 			</Gradient>
 		)
 	}
 }
 
 const mapStateToProps = ({ registration }: any) => {
-	const { name, email, password, confirmPassword, error, loading } = registration ;
+	const { name, email, password, confirmPassword, error, loading } = registration;
 	return { name, email, password, confirmPassword, error, loading };
 }
 

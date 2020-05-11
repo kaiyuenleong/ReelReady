@@ -21,15 +21,15 @@ const REGISTRATION_STATE = {
 export default (state = REGISTRATION_STATE, action: any) => {
   switch (action.type) {
     case NEW_NAME_CHANGED:
-      return { ...state, name: action.payload };
+      return { ...state, name: action.payload, error: "" };
     case NEW_EMAIL_CHANGED:
-      return { ...state, email: action.payload };
+      return { ...state, email: action.payload, error: "" };
     case NEW_PASSWORD_CHANGED:
-      return { ...state, password: action.payload };
+      return { ...state, password: action.payload, error: "" };
     case NEW_CONFIRM_PASSWORD_CHANGED:
-      return { ...state, confirmPassword: action.payload };
+      return { ...state, confirmPassword: action.payload, error: "" };
     case REGISTER_USER:
-      return { ...state, loading: true, error: '' };
+      return { ...state, loading: true, error: "" };
     case REGISTER_USER_SUCCESS:
       // What to do here?
       return { ...state, ...REGISTRATION_STATE, user: action.payload };
