@@ -6,7 +6,22 @@ const deviceStorage = {
       await AsyncStorage.setItem(key, value);
     } catch(error) {
       // dev only
-      console.log('AsyncStorage Error: ' + error.message);
+      console.log('AsyncStorage SaveItem Error: ' + error.message);
+    }
+  },
+
+  async retrieveItem(key: any) {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value) {
+        return value;
+      } else {
+        return null;
+      }
+    } catch(error) {
+      // dev only
+      console.log('AsyncStorage RetrieveItem Error: ' + error.message);
+      return null;
     }
   }
 };
