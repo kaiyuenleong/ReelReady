@@ -1,25 +1,52 @@
 import React, { Component } from "react";
 import AppNavigator from "./src/navigator/AppNavigator";
-import firebase from "firebase";
+import DeviceStorage from "./src/services/deviceStorage";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
 import reducers from "./src/reducers";
+import axios from "axios";
 
+import { API_URL } from "./src/services/API";
 
-class App extends Component {
-  componentWillMount() {
-    const config = {
-      apiKey: 'AIzaSyD53-D5psNsakbZqnu8p7RMJtvsmbE20Mc',
-      authDomain: 'reelready-86d2b.firebaseapp.com',
-      databaseURL: 'https://reelready-86d2b.firebaseio.com',
-      projectId: 'reelready-86d2b',
-      storageBucket: 'reelready-86d2b.appspot.com',
-      messagingSenderId: '977003535664',
-      appId: '1:977003535664:web:b03d8180de94aca2'
+interface AppProps {}
+
+interface AppState {
+  jwt: string | null;
+}
+
+class App extends Component<AppProps, AppState> {
+  private _isAuthenticated: boolean;
+
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      jwt: null
     };
+    this._isAuthenticated = false;
+  }
 
-    firebase.initializeApp(config);
+  async componentDidMount() {
+    const jwt = await DeviceStorage.retrieveItem("token_id");
+
+    if (jwt) {
+      this._isAuthenticated = true;
+      this.setState({
+        jwt: jwt
+      }, this.sendToken);
+    }
+  }
+
+  sendToken = () => {
+    axios.post(API_URL, {
+      headers: {
+        authorization: `Bearer ${this.state.jwt}` 
+      }
+    }).then((res) => {
+      console.log(res);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
@@ -27,7 +54,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <AppNavigator isAuthenticated={this._isAuthenticated} jwt={this.state.jwt} />
       </Provider>
     )
   }

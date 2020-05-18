@@ -3,12 +3,12 @@ import { TextInput, View, StyleSheet } from 'react-native';
 
 interface InputProps {
     value: string;
-    onChangeText: () => void;
+    onChangeText: ((text: string) => void);
     placeholder: string;
     secureTextEntry?: boolean;
 }
 
-const Input: React.StatelessComponent<InputProps> = ({ value, onChangeText, placeholder, secureTextEntry }) => {
+const Input: React.FC<InputProps> = ({ value, onChangeText, placeholder, secureTextEntry }) => {
   const { inputStyle, containerStyle } = styles;
 
   return (
@@ -17,6 +17,7 @@ const Input: React.StatelessComponent<InputProps> = ({ value, onChangeText, plac
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         autoCorrect={false}
+        autoCompleteType="off"
         style={inputStyle}
         value={value}
         onChangeText={onChangeText}
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   containerStyle: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center'
   }
