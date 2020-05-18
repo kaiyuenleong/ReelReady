@@ -5,25 +5,48 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
 import reducers from "./src/reducers";
+import axios from "axios";
+
+import { API_URL } from "./src/services/API";
 
 interface AppProps {}
 
-class App extends Component<AppProps> {
-  private jwt: string | null;
-  private isAuthenticated: boolean;
+interface AppState {
+  jwt: string | null;
+}
+
+class App extends Component<AppProps, AppState> {
+  private _isAuthenticated: boolean;
 
   constructor(props: AppProps) {
     super(props);
-    this.jwt = "";
-    this.isAuthenticated = false;
+    this.state = {
+      jwt: null
+    };
+    this._isAuthenticated = false;
   }
 
   async componentDidMount() {
-    this.jwt = await DeviceStorage.retrieveItem("token_id");
+    const jwt = await DeviceStorage.retrieveItem("token_id");
 
-    if (this.jwt) {
-      this.isAuthenticated = true;
+    if (jwt) {
+      this._isAuthenticated = true;
+      this.setState({
+        jwt: jwt
+      }, this.sendToken);
     }
+  }
+
+  sendToken = () => {
+    axios.post(API_URL, {
+      headers: {
+        authorization: `Bearer ${this.state.jwt}` 
+      }
+    }).then((res) => {
+      console.log(res);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
@@ -31,7 +54,7 @@ class App extends Component<AppProps> {
 
     return (
       <Provider store={store}>
-        <AppNavigator isAuthenticated={this.isAuthenticated} />
+        <AppNavigator isAuthenticated={this._isAuthenticated} jwt={this.state.jwt} />
       </Provider>
     )
   }

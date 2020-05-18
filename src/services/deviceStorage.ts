@@ -23,6 +23,15 @@ const deviceStorage = {
       console.log('AsyncStorage RetrieveItem Error: ' + error.message);
       return null;
     }
+  },
+
+  async deleteItem(key: any) {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch(error) {
+      // dev only
+      console.log('AsyncStorage DeleteItem Error: ' + error.message);
+    }
   }
 };
 

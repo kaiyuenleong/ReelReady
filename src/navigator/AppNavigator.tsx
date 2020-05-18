@@ -16,6 +16,7 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 interface AppNavigatorProps {
 	isAuthenticated: boolean;
+	jwt: string | null;
 }
 
 class AppNavigator extends Component<AppNavigatorProps> {
@@ -23,7 +24,7 @@ class AppNavigator extends Component<AppNavigatorProps> {
 		super(props);
 	}
 
-	renderNonAuthenticatedScreens() {
+	returnNonAuthenticatedScreens() {
 		return (
 			<RootStack.Navigator>
 				<RootStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
@@ -33,7 +34,7 @@ class AppNavigator extends Component<AppNavigatorProps> {
 		)
 	}
 
-	renderAuthenticatedScreens() {
+	returnAuthenticatedScreens() {
 		return (
 			<RootStack.Navigator>
 				<RootStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
@@ -44,7 +45,7 @@ class AppNavigator extends Component<AppNavigatorProps> {
 	render() {
 		return (
 			<NavigationContainer>
-				{this.props.isAuthenticated ? this.renderAuthenticatedScreens() : this.renderNonAuthenticatedScreens()}
+				{this.props.isAuthenticated ? this.returnAuthenticatedScreens() : this.returnNonAuthenticatedScreens()}
 			</NavigationContainer>
 		)
 	}
