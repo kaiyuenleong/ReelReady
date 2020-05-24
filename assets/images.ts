@@ -3,7 +3,8 @@ const Images = {
   profilePlaceholder: require('./images/profile_placeholder.jpg'),
   profilePlusSign: require('./images/plus_sign.png'),
   dreamCatchersPlaceholder: require('./images/dreamcatchersposter.jpg'),
-  theOmegaPlaceholder: require('./images/theomegaposter.jpg')
+  theOmegaPlaceholder: require('./images/theomegaposter.jpg'),
+  ameliaPlaceholder: require('./images/ameliaposter.jpg')
 }
 
 export { Images };

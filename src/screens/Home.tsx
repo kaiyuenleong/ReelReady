@@ -1,9 +1,12 @@
 import React, { Component, RefObject } from "react";
-import { Text, View, Dimensions } from "react-native";
+import { TouchableOpacity, View, Dimensions, Image } from "react-native";
 import Carousel from "react-native-snap-carousel";
+import DeviceConfig from "../services/deviceConfig";
 import HomeHeader from "../components/HomeHeader";
-import { Gradient, Card } from "../components/common";
+import { Card } from "../components/Card";
+import { Gradient } from "../components/common";
 import { Images } from "../../assets/images";
+import Icons from "../../assets/icons";
 import styles from "../styles/Home";
 
 interface HomeProps {}
@@ -13,7 +16,7 @@ interface HomeState {
   activeIndex: number;
 }
 
-const windowWidth = Dimensions.get('window').width;
+const windowWidth = DeviceConfig.getWindowWidth();
 
 class Home extends Component<HomeProps, HomeState> {
 
@@ -26,12 +29,16 @@ class Home extends Component<HomeProps, HomeState> {
       activeIndex: 0,
       carouselItems: [
       {
-          title: "The Omega",
-          image: Images.theOmegaPlaceholder
+        title: "The Omega",
+        image: Images.theOmegaPlaceholder
       },
       {
-          title: "Dream Catchers",
-          image: Images.dreamCatchersPlaceholder
+        title: "Dream Catchers",
+        image: Images.dreamCatchersPlaceholder
+      },
+      {
+        title: "Amelia",
+        image: Images.ameliaPlaceholder
       }
     ]}
   }
@@ -42,7 +49,7 @@ class Home extends Component<HomeProps, HomeState> {
         label={item.title}
         status="Active"
         image={item.image} 
-        notificationCount={1}
+        notificationCount={2}
       />
     )
   }
@@ -51,15 +58,27 @@ class Home extends Component<HomeProps, HomeState> {
     return (
       <Gradient>
         <View style={styles.contentContainer}>
-          <HomeHeader username="Kai" />
-          <Carousel
-            layout={"default"}
-            ref={(ref: any) => this.carousel = ref}
-            data={this.state.carouselItems}
-            sliderWidth={windowWidth}
-            itemWidth={windowWidth - 60}
-            renderItem={this._renderItem}
-            onSnapToItem={index => this.setState({ activeIndex: index })} />
+          <View style={{ flex: 1 }}>
+            <HomeHeader username="Kai" onSeeAll={() => console.log("See all tapped")} />
+          </View>
+          <View style={{ flex: 5 }}>
+            <Carousel
+              layout={"default"}
+              ref={(ref: any) => this.carousel = ref}
+              data={this.state.carouselItems}
+              sliderWidth={windowWidth}
+              itemWidth={windowWidth - 60}
+              renderItem={this._renderItem}
+              onSnapToItem={index => this.setState({ activeIndex: index })}
+            />
+          </View>   
+          <View style={styles.advanceButtonContainer}>
+            <TouchableOpacity>
+              <View style={styles.advanceButton}>
+                <Image source={Icons.forwardIOS} resizeMode="center" />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </Gradient>
     )

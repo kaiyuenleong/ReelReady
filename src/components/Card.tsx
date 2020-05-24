@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import Icons from "../../assets/icons";
 
 type StatusType = "Active" | "Inactive"
 
@@ -13,9 +14,10 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ image, label, notificationCount, status }) => {
   const {
     cardStyle,
+    contentContainerStyle,
     imageContainerStyle,
     labelContainerStyle,
-    statusContainerStyle,
+    notificationContainerStyle,
     labelStyle,
     statusStyle
   } = styles;
@@ -26,13 +28,13 @@ const Card: React.FC<CardProps> = ({ image, label, notificationCount, status }) 
       <View style={imageContainerStyle}>
         <Image source={image} style={{ height: "100%", width: "auto" }} />
       </View>
-      <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={contentContainerStyle}>
         <View style={labelContainerStyle}>
           <Text style={labelStyle}>{label}</Text>
-          {notificationCount === 0 ? null : <Notification notificationCount={notificationCount} />}
-        </View>
-        <View style={statusContainerStyle}>
           <Text style={statusStyle}>{status}</Text>
+        </View>
+        <View style={notificationContainerStyle}>
+          {notificationCount === 0 ? null : <Notification notificationCount={notificationCount} />}
         </View>
       </View>
     </View>
@@ -44,10 +46,12 @@ interface NotificationProps {
 }
 
 const Notification: React.FC<NotificationProps> = ({ notificationCount }) => {
-  const { notificationStyle } = styles;
+  const { notificationStyle, notificationBellStyle } = styles;
   return (
-    <View>
-      {/* Insert notification icon here */}
+    <View style={{ flexDirection: "row" }}>
+      <View>
+        <Image source={Icons.notificationBell} style={notificationBellStyle} />
+      </View>
       <Text style={notificationStyle}>
         {notificationCount + " notification" + (notificationCount === 1 ? "" : "s")}
       </Text>
@@ -61,42 +65,45 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     flex: 1,
     padding: 20,
-    
+  },
+  contentContainerStyle: {
+    flex: 1
   },
   imageContainerStyle: {
     borderRadius: 12,
     flex: 4,
-    overflow: "hidden"
-  },
-  cardInfoStyle: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between"
+    overflow: "hidden",
+    elevation: Platform.OS === "android" ? 20 : 0
   },
   labelContainerStyle: {
-    flex: 2,
-    color: "#000000",
-    borderColor: "red",
-    borderWidth: 1
-  },
-  statusContainerStyle: {
     flex: 1,
-    borderColor: "red",
-    borderWidth: 1
+    color: "#000000",
+    justifyContent: "space-between",
+    flexDirection: "row"
+  },
+  notificationContainerStyle: {
+    flex: 1
+  },
+  notificationBellStyle: {
+    height: 25,
+    width: 25
   },
   labelStyle: {
     fontWeight: "bold",
     fontSize: 22,
     letterSpacing: 0.5,
-    textAlign: "left"
+    textAlign: "left",
+    textAlignVertical: Platform.OS === "android" ? "bottom" : undefined
   },
   statusStyle: {
     textAlign: "right",
     color: "rgba(0, 0, 0, 0.5)",
-    fontSize: 14
+    fontSize: 15,
+    textAlignVertical: Platform.OS === "android" ? "bottom" : undefined
   },
   notificationStyle: {
-    fontSize: 15
+    fontSize: 15,
+    textAlignVertical: Platform.OS === "android" ? "center" : undefined
   }
 });
 
