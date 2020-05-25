@@ -16,7 +16,6 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 interface AppNavigatorProps {
 	isAuthenticated: boolean;
-	jwt: string | null;
 }
 
 class AppNavigator extends Component<AppNavigatorProps> {

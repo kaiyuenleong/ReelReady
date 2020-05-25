@@ -47,6 +47,8 @@ interface NotificationProps {
 
 const Notification: React.FC<NotificationProps> = ({ notificationCount }) => {
   const { notificationStyle, notificationBellStyle } = styles;
+  const plural = notificationCount === 1 ? " notification" : " notifications";
+
   return (
     <View style={{ flexDirection: "row" }}>
       <View>
@@ -56,7 +58,7 @@ const Notification: React.FC<NotificationProps> = ({ notificationCount }) => {
         />
       </View>
       <Text style={notificationStyle}>
-        {(notificationCount === 0 ? "No" : notificationCount) + " notifications"}
+        {(notificationCount === 0 ? "No" : notificationCount) + plural}
       </Text>
     </View>
   )
