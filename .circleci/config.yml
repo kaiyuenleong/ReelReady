@@ -1,0 +1,22 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-deploy:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          name: Installing dependencies
+          command: npm install
+      - run:
+          name: Login to Expo
+          command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - run:
+          name: Publish to Expo
+          command: npx expo publish
+workflows:
+    build-and-publish:
+      jobs:
+        - build-and-test
