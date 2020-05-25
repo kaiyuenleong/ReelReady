@@ -8,11 +8,10 @@ import {
 	Keyboard,
 	Platform
 } from "react-native";
-// import * as ImagePicker from "expo-image-picker";
 import { RegistrationScreenRouteProp, RegistrationScreenNavigationProp } from "../navigator/types";
 import { connect } from "react-redux";
 import { newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser } from "../actions";
-import ImagePickerComponent from "../components/ImagePicker";
+import { ImagePickerComponent } from "../components";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Registration";
 

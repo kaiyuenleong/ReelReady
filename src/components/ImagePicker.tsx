@@ -62,7 +62,7 @@ class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePicker
   }
 }
 
-export default ImagePickerComponent;
+export { ImagePickerComponent };
 
 const styles = StyleSheet.create({
   pickerContainer: {

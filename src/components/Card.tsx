@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   imageContainerStyle: {
     borderRadius: 12,
-    flex: 4,
+    flex: 5,
     overflow: "hidden",
     elevation: Platform.OS === "android" ? 20 : 0
   },
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   },
   notificationStyle: {
     fontSize: 15,
+    marginLeft: 3,
     textAlignVertical: Platform.OS === "android" ? "center" : undefined
   }
 });

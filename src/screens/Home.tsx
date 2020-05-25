@@ -1,9 +1,8 @@
 import React, { Component, RefObject } from "react";
-import { TouchableOpacity, View, Dimensions, Image } from "react-native";
+import { TouchableOpacity, View, Image } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DeviceConfig from "../services/deviceConfig";
-import HomeHeader from "../components/HomeHeader";
-import { Card } from "../components/Card";
+import { HomeHeader, Card } from "../components";
 import { Gradient } from "../components/common";
 import { Images } from "../../assets/images";
 import Icons from "../../assets/icons";
@@ -61,7 +60,7 @@ class Home extends Component<HomeProps, HomeState> {
           <View style={{ flex: 1 }}>
             <HomeHeader username="Kai" onSeeAll={() => console.log("See all tapped")} />
           </View>
-          <View style={{ flex: 5 }}>
+          <View style={{ flex: 4 }}>
             <Carousel
               layout={"default"}
               ref={(ref: any) => this.carousel = ref}
