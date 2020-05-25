@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ image, label, notificationCount, status }) 
           <Text style={statusStyle}>{status}</Text>
         </View>
         <View style={notificationContainerStyle}>
-          {notificationCount === 0 ? null : <Notification notificationCount={notificationCount} />}
+          <Notification notificationCount={notificationCount} />
         </View>
       </View>
     </View>
@@ -50,10 +50,13 @@ const Notification: React.FC<NotificationProps> = ({ notificationCount }) => {
   return (
     <View style={{ flexDirection: "row" }}>
       <View>
-        <Image source={Icons.notificationBell} style={notificationBellStyle} />
+        <Image 
+          source={(notificationCount > 0 ? Icons.notificationBellActive : Icons.notificationBellInactive)}
+          style={notificationBellStyle}
+        />
       </View>
       <Text style={notificationStyle}>
-        {notificationCount + " notification" + (notificationCount === 1 ? "" : "s")}
+        {(notificationCount === 0 ? "No" : notificationCount) + " notifications"}
       </Text>
     </View>
   )

@@ -48,7 +48,7 @@ class Home extends Component<HomeProps, HomeState> {
         label={item.title}
         status="Active"
         image={item.image} 
-        notificationCount={2}
+        notificationCount={0}
       />
     )
   }
