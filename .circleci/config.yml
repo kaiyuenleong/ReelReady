@@ -19,4 +19,4 @@ jobs:
 workflows:
     build-and-publish:
       jobs:
-        - build-and-test
+        - build-and-deploy
