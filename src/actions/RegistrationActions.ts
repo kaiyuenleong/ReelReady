@@ -6,9 +6,11 @@ import {
   NEW_EMAIL_CHANGED,
   NEW_PASSWORD_CHANGED,
   NEW_CONFIRM_PASSWORD_CHANGED,
+  NEW_PROFILE_IMAGE_SELECTED,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
-  REGISTER_USER
+  REGISTER_USER,
+  REGISTER_CANCEL
 } from "./types";
 
 interface Registration {
@@ -35,7 +37,7 @@ const newEmailChanged = (email: string) => {
 const newPasswordChanged = (password: string) => {
   return {
     type: NEW_PASSWORD_CHANGED,
-    payload: password,
+    payload: password
   }
 }
 
@@ -46,6 +48,13 @@ const newConfirmPasswordChanged = (password: string) => {
   }
 }
 
+const newProfileImageSelected = (uri: string) => {
+  return {
+    type: NEW_PROFILE_IMAGE_SELECTED,
+    payload: uri
+  }
+}
+
 const registerUser = ({ name, email, password, confirmPassword }: Registration) => {
   return (dispatch: any) => {
     dispatch({ type: REGISTER_USER });
@@ -53,9 +62,8 @@ const registerUser = ({ name, email, password, confirmPassword }: Registration) 
     if (password !== confirmPassword) {
       dispatch({ type: REGISTER_USER_FAIL, payload: "The provided passwords do not match."});
     } else {
-      // Call API to register user here
       console.log("posting to axios");
-      axios.post("http://192.168.0.5:3000/" + "signup", {
+      axios.post(`${API_URL}/signup`, {
         name,
         email,
         password
@@ -70,10 +78,19 @@ const registerUser = ({ name, email, password, confirmPassword }: Registration) 
   }
 }
 
+const cancelRegistration = () => {
+  return {
+    type: REGISTER_CANCEL,
+    payload: ""
+  }
+}
+
 export {
   newNameChanged,
   newEmailChanged,
   newPasswordChanged,
   newConfirmPasswordChanged,
-  registerUser
+  newProfileImageSelected,
+  registerUser,
+  cancelRegistration
 }

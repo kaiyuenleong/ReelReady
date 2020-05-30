@@ -3,9 +3,11 @@ import {
   NEW_EMAIL_CHANGED,
   NEW_PASSWORD_CHANGED,
   NEW_CONFIRM_PASSWORD_CHANGED,
+  NEW_PROFILE_IMAGE_SELECTED,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
-  REGISTER_USER
+  REGISTER_USER,
+  REGISTER_CANCEL
 } from '../actions/types';
 
 const REGISTRATION_STATE = {
@@ -15,7 +17,8 @@ const REGISTRATION_STATE = {
   confirmPassword: '',
   user: null,
   error: '',
-  loading: false
+  loading: false,
+  image: ''
 };
 
 export default (state = REGISTRATION_STATE, action: any) => {
@@ -28,13 +31,17 @@ export default (state = REGISTRATION_STATE, action: any) => {
       return { ...state, password: action.payload, error: "" };
     case NEW_CONFIRM_PASSWORD_CHANGED:
       return { ...state, confirmPassword: action.payload, error: "" };
+    case NEW_PROFILE_IMAGE_SELECTED:
+      return { ...state, image: action.payload, error: "" };
     case REGISTER_USER:
       return { ...state, loading: true, error: "" };
     case REGISTER_USER_SUCCESS:
       // What to do here?
       return { ...state, ...REGISTRATION_STATE, user: action.payload };
     case REGISTER_USER_FAIL:
-      return { ...state, error: action.payload, password: "", confirmPassword: "", loading: false }
+      return { ...state, error: action.payload, password: "", confirmPassword: "", loading: false };
+    case REGISTER_CANCEL:
+      return { ...REGISTRATION_STATE };
     default:
       return state;
   }

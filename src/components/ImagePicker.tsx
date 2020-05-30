@@ -1,19 +1,18 @@
 import * as React from "react";
 import { Image, View, TouchableOpacity, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { newProfileImageSelected } from "../actions";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import { Images } from "../../assets/images";
 
 interface ImagePickerProps {
-
+  image: string;
+  newProfileImageSelected: (imageURI: string) => {type: string, payload: string};
 }
 
-interface ImagePickerState {
-
-}
-
-class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePickerState> {
+class ImagePickerComponent extends React.Component<ImagePickerProps> {
   componentDidMount() {
     this.getPermissionsAsync();
   }
@@ -36,11 +35,15 @@ class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePicker
         quality: 1
       });
       if (!selectedImage.cancelled) {
-        // Update redux state here
+        this.onImageSelect(selectedImage.uri);
       }
     } catch (err) {
       console.log(err);
     }
+  }
+
+  onImageSelect = (image: string) => {
+    this.props.newProfileImageSelected(image);
   }
 
   render() {
@@ -48,7 +51,7 @@ class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePicker
       <View style={styles.pickerContainer}>
         <TouchableOpacity style={styles.touchable} onPress={this._pickImage}>
           <Image
-            source={Images.profilePlaceholder}
+            source={this.props.image ? {uri: this.props.image} : Images.profilePlaceholder}
             style={styles.imageProfile}
           />
           {/* Replace this image with one at a higher resolution */}
@@ -62,7 +65,12 @@ class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePicker
   }
 }
 
-export { ImagePickerComponent };
+const mapStateToProps = ({ registration }: any) => {
+  const { image } = registration;
+  return { image };
+}
+
+export default connect(mapStateToProps, { newProfileImageSelected })(ImagePickerComponent);
 
 const styles = StyleSheet.create({
   pickerContainer: {

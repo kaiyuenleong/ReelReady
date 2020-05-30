@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { RegistrationScreenRouteProp, RegistrationScreenNavigationProp } from "../navigator/types";
 import { connect } from "react-redux";
-import { newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser } from "../actions";
-import { ImagePickerComponent } from "../components";
+import { newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser, cancelRegistration } from "../actions";
+import ImagePickerComponent from "../components/ImagePicker";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Registration";
 
@@ -31,6 +31,7 @@ interface RegistrationProps {
 	newEmailChanged: (email: string) => RegistrationAction;
 	newPasswordChanged: (password: string) => RegistrationAction;
 	newConfirmPasswordChanged: (password: string) => RegistrationAction;
+	cancelRegistration: any;
 	registerUser: any;
 
 	route: RegistrationScreenRouteProp;
@@ -39,6 +40,7 @@ interface RegistrationProps {
 
 class Registration extends Component<RegistrationProps> {
 	onCancel = () => {
+		this.props.cancelRegistration();
 		this.props.navigation.navigate('Login');
 	}
 
@@ -104,9 +106,7 @@ class Registration extends Component<RegistrationProps> {
 							<View style={styles.bottomContainer}>
 								{this.renderButton()}
 								<TouchableOpacity onPress={this.onCancel}>
-									<Text style={styles.cancelText}>
-										Cancel
-									</Text>
+									<Text style={styles.cancelText}>Cancel</Text>
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -124,4 +124,4 @@ const mapStateToProps = ({ registration }: any) => {
 
 export default connect(
 	mapStateToProps,
-	{ newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser })(Registration);
+	{ newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser, cancelRegistration })(Registration);

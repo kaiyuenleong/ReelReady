@@ -11,19 +11,14 @@ import { API_URL } from "./src/services/API";
 
 interface AppProps {}
 
-interface AppState {
-  jwt: string | null;
-}
-
-class App extends Component<AppProps, AppState> {
+class App extends Component<AppProps> {
   private _isAuthenticated: boolean;
+  private _jwt: string | undefined;
 
   constructor(props: AppProps) {
     super(props);
-    this.state = {
-      jwt: null
-    };
     this._isAuthenticated = false;
+    this._jwt = undefined;
   }
 
   async componentDidMount() {
@@ -31,16 +26,15 @@ class App extends Component<AppProps, AppState> {
 
     if (jwt) {
       this._isAuthenticated = true;
-      this.setState({
-        jwt: jwt
-      }, this.sendToken);
+      this._jwt = jwt;
+      this.sendToken();
     }
   }
 
   sendToken = () => {
     axios.post(API_URL, {
       headers: {
-        authorization: `Bearer ${this.state.jwt}` 
+        authorization: `Bearer ${this._jwt}` 
       }
     }).then((res) => {
       console.log(res);
@@ -54,7 +48,7 @@ class App extends Component<AppProps, AppState> {
 
     return (
       <Provider store={store}>
-        <AppNavigator isAuthenticated={this._isAuthenticated} jwt={this.state.jwt} />
+        <AppNavigator isAuthenticated={this._isAuthenticated} />
       </Provider>
     )
   }
