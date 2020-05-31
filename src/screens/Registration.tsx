@@ -26,6 +26,7 @@ interface RegistrationProps {
 	password: string;
 	confirmPassword: string;
 	error: string;
+	image: string;
 
 	newNameChanged: (name: string) => RegistrationAction;
 	newEmailChanged: (email: string) => RegistrationAction;
@@ -61,8 +62,8 @@ class Registration extends Component<RegistrationProps> {
 	}
 
 	onButtonPress = () => {
-		const { name, email, password, confirmPassword } = this.props;
-		this.props.registerUser({ name, email, password, confirmPassword });
+		const { name, email, password, confirmPassword, image } = this.props;
+		this.props.registerUser({ name, email, password, confirmPassword, image });
 	}
 
 	renderButton() {
@@ -118,8 +119,8 @@ class Registration extends Component<RegistrationProps> {
 }
 
 const mapStateToProps = ({ registration }: any) => {
-	const { name, email, password, confirmPassword, error, loading } = registration;
-	return { name, email, password, confirmPassword, error, loading };
+	const { name, email, password, confirmPassword, error, loading, image } = registration;
+	return { name, email, password, confirmPassword, error, loading, image };
 }
 
 export default connect(

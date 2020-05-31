@@ -1,6 +1,7 @@
 import axios from "axios";
 import deviceStorage from "../services/deviceStorage";
-import { API_URL } from "../services/API";
+import { API_URL, CLOUDINARY_URL } from "../services/API";
+import { Registration } from "./interfaces";
 import {
   NEW_NAME_CHANGED,
   NEW_EMAIL_CHANGED,
@@ -12,13 +13,6 @@ import {
   REGISTER_USER,
   REGISTER_CANCEL
 } from "./types";
-
-interface Registration {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 
 const newNameChanged = (name: string) => {
   return {
@@ -48,30 +42,34 @@ const newConfirmPasswordChanged = (password: string) => {
   }
 }
 
-const newProfileImageSelected = (uri: string) => {
+const newProfileImageSelected = (imageURI: string) => {
   return {
     type: NEW_PROFILE_IMAGE_SELECTED,
-    payload: uri
+    payload: imageURI
   }
 }
 
-const registerUser = ({ name, email, password, confirmPassword }: Registration) => {
-  return (dispatch: any) => {
+const registerUser = ({ name, email, password, confirmPassword, image }: Registration) => {
+  return async (dispatch: any) => {
     dispatch({ type: REGISTER_USER });
 
     if (password !== confirmPassword) {
       dispatch({ type: REGISTER_USER_FAIL, payload: "The provided passwords do not match."});
     } else {
-      console.log("posting to axios");
+      let data = {
+        "file": image,
+        "upload_preset": "reelready-profile"
+      }
+      let imageURL = await cloudinaryUpload(data);
       axios.post(`${API_URL}/signup`, {
         name,
         email,
-        password
+        password,
+        imageURL
       }).then((res) => {
         deviceStorage.saveItem("token_id", res.data.authToken);
         dispatch({ type: REGISTER_USER_SUCCESS, payload: "set user" });
       }).catch((error) => {
-        console.log(error);
         dispatch({ type: REGISTER_USER_FAIL, payload: error });
       })
     }
@@ -84,6 +82,26 @@ const cancelRegistration = () => {
     payload: ""
   }
 }
+
+const cloudinaryUpload = (data: any) => {
+  let imageURL = "";
+  return new Promise(function(resolve, reject) {
+    fetch(CLOUDINARY_URL, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: "POST"
+    }).then(
+      (res) => res.json()
+    ).then(data => {
+      imageURL = data.secure_url;
+      resolve(imageURL);
+    }).catch((error) => {
+      reject(error);
+    });
+  })
+} 
 
 export {
   newNameChanged,

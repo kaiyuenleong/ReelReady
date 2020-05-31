@@ -37,7 +37,7 @@ export default (state = REGISTRATION_STATE, action: any) => {
       return { ...state, loading: true, error: "" };
     case REGISTER_USER_SUCCESS:
       // What to do here?
-      return { ...state, ...REGISTRATION_STATE, user: action.payload };
+      return { ...REGISTRATION_STATE, user: action.payload };
     case REGISTER_USER_FAIL:
       return { ...state, error: action.payload, password: "", confirmPassword: "", loading: false };
     case REGISTER_CANCEL:

@@ -12,7 +12,18 @@ interface ImagePickerProps {
   newProfileImageSelected: (imageURI: string) => {type: string, payload: string};
 }
 
-class ImagePickerComponent extends React.Component<ImagePickerProps> {
+interface ImagePickerState {
+  selectedImage: String | undefined;
+}
+
+class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePickerState> {
+  constructor(props: ImagePickerProps) {
+    super(props);
+    this.state = {
+      selectedImage: undefined
+    }
+  }
+  
   componentDidMount() {
     this.getPermissionsAsync();
   }
@@ -32,18 +43,20 @@ class ImagePickerComponent extends React.Component<ImagePickerProps> {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
         aspect: [4, 3],
-        quality: 1
+        quality: 1,
+        base64: true
       });
       if (!selectedImage.cancelled) {
-        this.onImageSelect(selectedImage.uri);
+        this.setState({ selectedImage: selectedImage.uri });
+        this.onImageSelect(`data:image/jpg;base64,${selectedImage.base64}`);
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  onImageSelect = (image: string) => {
-    this.props.newProfileImageSelected(image);
+  onImageSelect = (imageURI: string) => {
+    this.props.newProfileImageSelected(imageURI);
   }
 
   render() {
@@ -51,7 +64,11 @@ class ImagePickerComponent extends React.Component<ImagePickerProps> {
       <View style={styles.pickerContainer}>
         <TouchableOpacity style={styles.touchable} onPress={this._pickImage}>
           <Image
-            source={this.props.image ? {uri: this.props.image} : Images.profilePlaceholder}
+            source={
+              this.state.selectedImage ? 
+              {uri: this.state.selectedImage} : 
+              Images.profilePlaceholder
+            }
             style={styles.imageProfile}
           />
           {/* Replace this image with one at a higher resolution */}
