@@ -5,14 +5,23 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ]
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
+    "@types/jest": "^25.2.3",
     "@types/node": "^13.13.4",
     "@types/react-native-snap-carousel": "^3.8.1",
+    "@types/react-test-renderer": "^16.9.2",
     "axios": "^0.19.2",
     "expo": "~37.0.3",
     "expo-image-picker": "~8.1.0",
@@ -32,11 +41,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-typescript": "^7.10.1",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
     "@types/react-redux": "^7.1.7",
+    "babel-jest": "^26.0.1",
     "babel-preset-expo": "~8.1.0",
     "expo-cli": "^3.20.9",
+    "jest-expo": "^37.0.0",
+    "react-test-renderer": "^16.13.1",
     "typescript": "^3.8.3"
   },
   "private": true
