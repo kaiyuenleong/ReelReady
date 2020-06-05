@@ -1,12 +1,17 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, View } from "react-native";
 import { Gradient } from "../components/common";
+import { Images } from "../../assets/images";
 
 const Splash: React.FC = () => {
   return (
     <Gradient>
-      <View>
-        <Text>Splash Screen</Text>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Image
+          source={Images.logoWithText}
+          resizeMode="contain"
+          style={{ height: 250, width: 250 }}
+        />
       </View>
     </Gradient>
   )

@@ -11,7 +11,8 @@ const LOGIN_STATE = {
   password: "",
   user: null,
   error: "",
-  loading: false
+  loading: false,
+  isAuthenticated: false
 };
 
 export default (state = LOGIN_STATE, action: any) => {
@@ -21,9 +22,9 @@ export default (state = LOGIN_STATE, action: any) => {
     case PASSWORD_CHANGED:
       return { ...state, password: action.payload, error: "" }
     case LOGIN_USER_SUCCESS:
-      return { ...state, ...LOGIN_STATE, user: action.payload };
+      return { ...state, user: action.payload, isAuthenticated: true };
     case LOGIN_USER_FAIL:
-      return { ...state, error: action.payload, password: "", loading: false };
+      return { ...state, error: action.payload, password: "", loading: false, isAuthenticated: false };
     case LOGIN_USER:
       return { ...state, loading: true, error: "" };
     default:

@@ -36,27 +36,33 @@ const loginUser = ({ email, password }: Login) => {
       dispatch({ type: LOGIN_USER_FAIL, payload: "Invalid email or password."});
     }
 
-    // Call API to login user here
-    axios.post(`${API_URL}/login`, {
+    axios.post(`http://192.168.0.5:3000/login`, {
       email,
       password
     }).then((res) => {
       deviceStorage.saveItem("token_id", res.data.authToken);
+      const user = {
+        name: res.data.name,
+        email: res.data.email,
+        id: res.data.id
+      }
+      dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
     }).catch((error) => {
       dispatch({ type: LOGIN_USER_FAIL, payload: error });
     })
   }
 }
 
-const loginUserFail = (dispatch: any) => {
-  dispatch({ type: LOGIN_USER_FAIL });
+const loginUserFail = () => {
+  return (dispatch: any) => {
+    dispatch({ type: LOGIN_USER_FAIL });
+  }
 }
 
-const loginUserSuccess = (dispatch: any, user: any) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-  });
+const loginUserSuccess = (user: any) => {
+  return (dispatch: any) => {
+    dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+  }
 }
 
 export {

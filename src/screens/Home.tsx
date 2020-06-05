@@ -7,6 +7,7 @@ import { Gradient } from "../components/common";
 import { Images } from "../../assets/images";
 import Icons from "../../assets/icons";
 import styles from "../styles/Home";
+import deviceStorage from "../services/deviceStorage";
 
 interface HomeProps {}
 
@@ -53,12 +54,17 @@ class Home extends Component<HomeProps, HomeState> {
     )
   }
 
+  onSeeAll = async () => {
+    await deviceStorage.deleteItem("token_id");
+    console.log("delete token");
+  }
+
   render() {
     return (
       <Gradient>
         <View style={styles.contentContainer}>
           <View style={{ flex: 1 }}>
-            <HomeHeader username="Kai" onSeeAll={() => console.log("See all tapped")} />
+            <HomeHeader username="Kai" onSeeAll={this.onSeeAll} />
           </View>
           <View style={{ flex: 4 }}>
             <Carousel
