@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loginUserSuccess } from "./actions/LoginActions";
-import Splash from "./screens/Splash";
-import AppNavigator from "./navigator/AppNavigator";
-import DeviceStorage from "./services/deviceStorage";
 import axios from "axios";
+
+import AppNavigator from "./navigator/AppNavigator";
+
+import { loginUserSuccess } from "./actions/LoginActions";
+import DeviceStorage from "./services/deviceStorage";
 import { API_URL } from "./services/API";
+
+import Splash from "./screens/Splash";
 
 // Passed from parent component
 interface SelfProps {}
@@ -39,20 +42,20 @@ class AppContainer extends Component<AppContainerProps, AppContainerState> {
     const jwt = await DeviceStorage.retrieveItem("token_id");
 
     if (jwt) {
-      const userData = await this.validateToken(jwt);
-      this.props.loginUserSuccess(userData);
+      await this.validateToken(jwt);
+      this.props.loginUserSuccess();
     }
     this.setState({ isLoading: false });
   }
 
   validateToken = (jwt: string) => {
     return new Promise(function(resolve, reject) {
-      axios.post("http://192.168.0.5:3000/validate", {
+      axios.post("http://192.168.0.5:3000/validate", {}, {
         headers: {
           authorization: `Bearer ${jwt}` 
         }
       }).then((res) => {
-        resolve(res.data);
+        resolve();
       }).catch((error) => {
         reject(error);
       });

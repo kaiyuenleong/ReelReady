@@ -6,7 +6,8 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
-  LOGIN_USER
+  LOGIN_USER,
+  CLEAR_LOGIN_ERROR
 } from "./types";
 
 interface Login {
@@ -32,23 +33,17 @@ const loginUser = ({ email, password }: Login) => {
   return (dispatch: any) => {
     dispatch({ type: LOGIN_USER });
 
-    if (!email || !password) {
-      dispatch({ type: LOGIN_USER_FAIL, payload: "Invalid email or password."});
-    }
-
     axios.post(`http://192.168.0.5:3000/login`, {
       email,
       password
     }).then((res) => {
       deviceStorage.saveItem("token_id", res.data.authToken);
-      const user = {
-        name: res.data.name,
-        email: res.data.email,
-        id: res.data.id
-      }
-      dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+      dispatch({ type: LOGIN_USER_SUCCESS });
     }).catch((error) => {
-      dispatch({ type: LOGIN_USER_FAIL, payload: error });
+      dispatch({ type: LOGIN_USER_FAIL, payload: error.response.data.error });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_LOGIN_ERROR });
+      }, 3000);
     })
   }
 }
@@ -59,9 +54,9 @@ const loginUserFail = () => {
   }
 }
 
-const loginUserSuccess = (user: any) => {
+const loginUserSuccess = () => {
   return (dispatch: any) => {
-    dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+    dispatch({ type: LOGIN_USER_SUCCESS });
   }
 }
 

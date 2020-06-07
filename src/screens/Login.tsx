@@ -49,7 +49,6 @@ class Login extends Component<LoginProps> {
 		this.props.loginUser({ email, password });
 	}
 
-	// Need to change button to loading circle when checking authentication?
 	renderButton() {
 		return (
 			<Button onPress={this.onButtonPress}>SIGN IN</Button>
