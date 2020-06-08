@@ -1,11 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "react-native-testing-library";
 
 import ForgotPassword from "../../src/screens/ForgotPassword";
 
 describe('<ForgotPassword />', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<ForgotPassword />).toJSON();
+    const tree = render(<ForgotPassword />).toJSON();
     expect(tree).toMatchSnapshot();
   })
 })
