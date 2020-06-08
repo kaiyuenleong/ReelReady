@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Splash /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <ViewManagerAdapter_ExpoLinearGradient
+    proxiedProperties={
+      Object {
+        "colors": Array [
+          4289198296,
+          4283231449,
+          4279833944,
+          4279304248,
+        ],
+        "endPoint": undefined,
+        "locations": Array [
+          0,
+          0.1,
+          0.8,
+          1,
+        ],
+        "startPoint": undefined,
+      }
+    }
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          Object {
+            "height": 250,
+            "width": 250,
+          }
+        }
+      />
+    </View>
+  </ViewManagerAdapter_ExpoLinearGradient>
+</View>
+`;
