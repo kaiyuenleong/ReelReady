@@ -70,7 +70,7 @@ const registerUser = ({ name, email, password, confirmPassword, image }: Registr
         deviceStorage.saveItem("token_id", res.data.authToken);
         dispatch({ type: REGISTER_USER_SUCCESS, payload: "set user" });
       }).catch((error) => {
-        dispatch({ type: REGISTER_USER_FAIL, payload: error });
+        dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.error });
       })
     }
   }
