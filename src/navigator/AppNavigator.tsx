@@ -26,9 +26,9 @@ class AppNavigator extends Component<AppNavigatorProps> {
 	returnNonAuthenticatedScreens() {
 		return (
 			<RootStack.Navigator>
-				<RootStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-				<RootStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
-				<RootStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+				<RootStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false, animationEnabled: false }} />
+				<RootStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false, animationEnabled: false }} />
+				<RootStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false, animationEnabled: false }} />
 			</RootStack.Navigator>
 		)
 	}
