@@ -6,6 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import { Images } from "../../assets/images";
+import Plus from "../../assets/icons/plus.svg";
 
 interface ImagePickerProps {
   image: string;
@@ -71,11 +72,7 @@ class ImagePickerComponent extends React.Component<ImagePickerProps, ImagePicker
             }
             style={styles.imageProfile}
           />
-          {/* Replace this image with one at a higher resolution */}
-          <Image
-            source={Images.profilePlusSign}
-            style={styles.imagePlus}
-          />
+          <Plus height={40} width={40} style={styles.imagePlus} />
         </TouchableOpacity>
       </View>
     );
@@ -103,14 +100,14 @@ const styles = StyleSheet.create({
   imageProfile: { 
     height: 120,
     width: 120,
-    borderRadius: 30,
-    resizeMode: 'contain'
+    borderRadius: 25,
+    resizeMode: 'contain',
+    opacity: 0.80
   },
   imagePlus: {
-    resizeMode: 'contain',
     zIndex: 1,
     position: 'absolute',
-    top: 100,
-    left: 100
+    top: 90,
+    left: 90
   },
 })

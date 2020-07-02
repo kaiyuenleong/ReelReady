@@ -42,8 +42,7 @@ class AppContainer extends Component<AppContainerProps, AppContainerState> {
     const jwt = await DeviceStorage.retrieveItem("token_id");
 
     if (jwt) {
-      await this.validateToken(jwt);
-      this.props.loginUserSuccess();
+      await this.validateToken(jwt).then(this.props.loginUserSuccess).catch((error) => console.log(error));
     }
     this.setState({ isLoading: false });
   }

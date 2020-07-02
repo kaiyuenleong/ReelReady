@@ -5,7 +5,7 @@ import Icons from "../../assets/icons";
 type StatusType = "Active" | "Inactive"
 
 interface CardProps {
-  image: any;
+  image: string;
   label: string;
   notificationCount: number;
   status: StatusType;
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({ image, label, notificationCount, status }) 
     <View style={cardStyle}>
       {/* Dynamically load images from server? */}
       <View style={imageContainerStyle}>
-        <Image source={image} style={{ height: "100%", width: "auto" }} />
+        <Image source={{ uri: image }} style={{ height: "100%", width: "auto" }} />
       </View>
       <View style={contentContainerStyle}>
         <View style={labelContainerStyle}>

@@ -1,11 +1,11 @@
 import React from "react";
 import { render } from "react-native-testing-library";
 
-import ForgotPassword from "../../src/screens/ForgotPassword";
+import Splash from "../../src/screens/Splash";
 
-describe('<ForgotPassword />', () => {
+describe('<Splash />', () => {
   it('renders correctly', () => {
-    const tree = render(<ForgotPassword />).toJSON();
+    const tree = render(<Splash />).toJSON();
     expect(tree).toMatchSnapshot();
   })
 })

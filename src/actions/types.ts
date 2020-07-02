@@ -16,3 +16,6 @@ export const REGISTER_USER_SUCCESS = 'register_user_success';
 export const REGISTER_USER_FAIL = 'register_user_fail';
 export const REGISTER_USER = 'register_user';
 export const REGISTER_CANCEL = 'register_cancel';
+
+// Home Types
+export const HOME_MOUNTED = 'home_mounted';
