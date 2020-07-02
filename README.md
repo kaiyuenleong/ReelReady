@@ -2,7 +2,7 @@
 
 Film production is an expensive process that requires effort and dedication from many people. Though seeing a final product on the screen is always an enlightening experience, a lot of planning and communication is involved in the process. As someone who has worked on a number of student film sets, I have had firsthand experiences in production getting delayed because of missing documents such as scripts and shot lists. In addition, miscommunication has always been a factor for when crew or cast members show up behind schedule on set. How can we mitigate these problems with technology?
 
-<img src="/screenshots/splash.jpg" width="150px" />  <img src="/screenshots/sign_in.jpg" width="150px" />  <img src="/screenshots/sign_up.jpg" width="150px" />  <img src="/screenshots/verification.jpg" width="150px" />  ![Home screen demo](screenshots/reelready.gif)
+<img src="/screenshots/splash.jpg" width="150px" />  <img src="/screenshots/sign_in.jpg" width="150px" />  <img src="/screenshots/sign_up.jpg" width="150px" />  <img src="/screenshots/verification.jpg" width="150px" />  <img src="/screenshots/reelready.gif" width="150px" />
 
 ## The Birth of Reel Ready
 ### June 2019
