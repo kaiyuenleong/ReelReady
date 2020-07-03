@@ -12,6 +12,7 @@ import { RegistrationScreenRouteProp, RegistrationScreenNavigationProp } from ".
 import { connect } from "react-redux";
 import { newNameChanged, newEmailChanged, newPasswordChanged, newConfirmPasswordChanged, registerUser, cancelRegistration } from "../actions";
 import ImagePickerComponent from "../components/ImagePicker";
+import VerificationModal from "../components/VerificationModal";
 import { Gradient, Button, Input } from "../components/common";
 import styles from "../styles/Registration";
 
@@ -39,7 +40,18 @@ interface RegistrationProps {
 	navigation: RegistrationScreenNavigationProp;
 }
 
-class Registration extends Component<RegistrationProps> {
+interface RegistrationState {
+	modalVisible: boolean;
+}
+
+class Registration extends Component<RegistrationProps, RegistrationState> {
+	constructor(props: RegistrationProps) {
+		super(props);
+		this.state = {
+			modalVisible: false
+		}
+	}
+
 	onCancel = () => {
 		this.props.cancelRegistration();
 		this.props.navigation.navigate('Login');
@@ -64,6 +76,16 @@ class Registration extends Component<RegistrationProps> {
 	onButtonPress = () => {
 		const { name, email, password, confirmPassword, image } = this.props;
 		this.props.registerUser({ name, email, password, confirmPassword, image });
+		this.setState({
+			modalVisible: true
+		});
+	}
+
+	setModalVisible = () => {
+		const visibility = this.state.modalVisible;
+		this.setState({
+			modalVisible: !visibility
+		});
 	}
 
 	renderButton() {
@@ -112,6 +134,7 @@ class Registration extends Component<RegistrationProps> {
 							</View>
 						</View>
 					</TouchableWithoutFeedback>
+					<VerificationModal isVisible={this.state.modalVisible} setModalVisible={this.setModalVisible} />
 				</KeyboardAvoidingView>
 			</Gradient>
 		)
