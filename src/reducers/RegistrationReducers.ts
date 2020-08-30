@@ -7,7 +7,11 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
   REGISTER_USER,
-  REGISTER_CANCEL
+  REGISTER_CANCEL,
+  CLEAR_REGISTRATION_ERROR,
+  VERIFY_USER,
+  VERIFY_USER_SUCCESS,
+  VERIFY_USER_FAIL
 } from '../actions/types';
 
 const REGISTRATION_STATE = {
@@ -18,7 +22,8 @@ const REGISTRATION_STATE = {
   user: null,
   error: '',
   loading: false,
-  image: ''
+  image: '',
+  isVisible: false
 };
 
 export default (state = REGISTRATION_STATE, action: any) => {
@@ -36,12 +41,19 @@ export default (state = REGISTRATION_STATE, action: any) => {
     case REGISTER_USER:
       return { ...state, loading: true, error: "" };
     case REGISTER_USER_SUCCESS:
-      // What to do here?
-      return { ...REGISTRATION_STATE, user: action.payload };
+      return { ...state, user: action.payload, isVisible: true };
     case REGISTER_USER_FAIL:
       return { ...state, error: action.payload, password: "", confirmPassword: "", loading: false };
     case REGISTER_CANCEL:
-      return { ...REGISTRATION_STATE };
+      return { ...state };
+    case CLEAR_REGISTRATION_ERROR:
+      return { ...state, error: "" };
+    case VERIFY_USER:
+      return { ...state, loading: true, error: "" };
+    case VERIFY_USER_SUCCESS:
+      return { ...state, isVisible: false };
+    case VERIFY_USER_FAIL:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

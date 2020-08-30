@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import { verifyUser } from "../actions";
 import Modal from "react-native-modal";
 import CodeInput from "react-native-confirmation-code-input";
 
 interface VerificationModalProps {
   isVisible: boolean;
-  error?: string;
-  setModalVisible: () => void;
+  error: string;
+  verifyUser: any;
 }
 
 class VerificationModal extends Component<VerificationModalProps> {
@@ -15,11 +17,7 @@ class VerificationModal extends Component<VerificationModalProps> {
   }
 
   onResendCode = () => {
-    console.log("On resend code pressed");
-  }
-
-  onVerificationFulfill = () => {
-    console.log("Verification fulfilled");
+    // To implement: Resending confirmation code
   }
   
   render() {
@@ -39,7 +37,6 @@ class VerificationModal extends Component<VerificationModalProps> {
         <Modal
           isVisible={isVisible}
           avoidKeyboard={true}
-          onBackdropPress={this.props.setModalVisible}
         >
           <View style={modalStyle}>
             <View style={modalTopViewStyle}>
@@ -56,7 +53,7 @@ class VerificationModal extends Component<VerificationModalProps> {
                   size={30}
                   space={10}
                   className="border-b"
-                  onFulfill={this.onVerificationFulfill}
+                  onFulfill={(verToken: string) => this.props.verifyUser(verToken)}
                   codeInputStyle={{ fontWeight: "800", color: "#000000", fontSize: 16 }}
                   activeColor="#4FD3CA"
                   inactiveColor="#000000"
@@ -118,4 +115,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default VerificationModal;
+const mapStateToProps = ({ registration }: any) => {
+  const { loading, error, isVisible } = registration;
+  return { loading, error, isVisible };
+}
+
+export default connect(mapStateToProps, { verifyUser })(VerificationModal);

@@ -40,16 +40,9 @@ interface RegistrationProps {
 	navigation: RegistrationScreenNavigationProp;
 }
 
-interface RegistrationState {
-	modalVisible: boolean;
-}
-
-class Registration extends Component<RegistrationProps, RegistrationState> {
+class Registration extends Component<RegistrationProps> {
 	constructor(props: RegistrationProps) {
 		super(props);
-		this.state = {
-			modalVisible: false
-		}
 	}
 
 	onCancel = () => {
@@ -76,16 +69,6 @@ class Registration extends Component<RegistrationProps, RegistrationState> {
 	onButtonPress = () => {
 		const { name, email, password, confirmPassword, image } = this.props;
 		this.props.registerUser({ name, email, password, confirmPassword, image });
-		this.setState({
-			modalVisible: true
-		});
-	}
-
-	setModalVisible = () => {
-		const visibility = this.state.modalVisible;
-		this.setState({
-			modalVisible: !visibility
-		});
 	}
 
 	renderButton() {
@@ -134,7 +117,7 @@ class Registration extends Component<RegistrationProps, RegistrationState> {
 							</View>
 						</View>
 					</TouchableWithoutFeedback>
-					<VerificationModal isVisible={this.state.modalVisible} setModalVisible={this.setModalVisible} />
+					<VerificationModal />
 				</KeyboardAvoidingView>
 			</Gradient>
 		)

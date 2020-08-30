@@ -4,6 +4,8 @@ interface Registration {
   password: string;
   confirmPassword: string;
   image: string;
+  token: string;
+  isVisible: boolean;
 }
 
 export { Registration };
