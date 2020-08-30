@@ -8,13 +8,12 @@ import DeviceConfig from "../services/deviceConfig";
 import deviceStorage from "../services/deviceStorage";
 import { HomeHeader, Card } from "../components";
 import { Gradient } from "../components/common";
-import { Images } from "../../assets/images";
 import Icons from "../../assets/icons";
 import styles from "../styles/Home";
 
 interface Production {
-  title: string;
-  image: string;
+  name: string;
+  coverImage: string;
 }
 
 interface HomeProps {
@@ -55,35 +54,29 @@ class Home extends Component<HomeProps, HomeState> {
     }); 
   }
 
-  _renderItem({ item }: any) {
+  renderProductionCard({ item }: any) {
     return (
-      <Card 
-        label={item.name}
-        status="Active"
-        image={item.coverImage} 
-        notificationCount={0}
-      />
-    )
+      Object.keys(item).length !== 0 ? 
+      <Card label={item.name} status="Active" image={item.coverImage} notificationCount={0} /> :
+      <Card newSet={true} />
+    );
   }
 
   onSeeAll = async () => {
     await deviceStorage.deleteItem("token_id");
-    console.log("delete token");
   }
 
   renderCarousel = () => {
-    return (this.props.productions.length > 0 ?
+    return (
       <Carousel 
         layout={"default"}
         ref={(ref: any) => this.carousel = ref}
-        data={this.props.productions}
+        data={[...this.props.productions, {}]}
         sliderWidth={windowWidth}
         itemWidth={windowWidth - 60}
-        renderItem={this._renderItem}
+        renderItem={this.renderProductionCard}
         onSnapToItem={index => this.setState({ activeIndex: index })}
-      /> :
-      // What to do here when there are no productions associated with the user?
-      <View />)
+      />)
   }
 
   render() {

@@ -1,44 +1,66 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from "react-native";
 import Icons from "../../assets/icons";
+import Plus from "../../assets/icons/plus.svg";
 
 type StatusType = "Active" | "Inactive"
 
 interface CardProps {
-  image: string;
-  label: string;
-  notificationCount: number;
-  status: StatusType;
+  image?: string;
+  label?: string;
+  notificationCount?: number;
+  status?: StatusType;
+  
+  newSet?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ image, label, notificationCount, status }) => {
+const Card: React.FC<CardProps> = ({ image, label, notificationCount, status, newSet }) => {
   const {
     cardStyle,
+    cardStyleNewSet,
     contentContainerStyle,
     imageContainerStyle,
+    imageContainerValidImageStyle,
     labelContainerStyle,
     notificationContainerStyle,
     labelStyle,
     statusStyle
   } = styles;
 
-  return (
-    <View style={cardStyle}>
-      {/* Dynamically load images from server? */}
-      <View style={imageContainerStyle}>
-        <Image source={{ uri: image }} style={{ height: "100%", width: "auto" }} />
-      </View>
-      <View style={contentContainerStyle}>
-        <View style={labelContainerStyle}>
-          <Text style={labelStyle}>{label}</Text>
-          <Text style={statusStyle}>{status}</Text>
-        </View>
-        <View style={notificationContainerStyle}>
-          <Notification notificationCount={notificationCount} />
+  if (newSet) {
+    return (
+      <View style={[cardStyle, cardStyleNewSet]}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <TouchableOpacity>
+            <Plus height={75} width={75} />
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
-  )
+    )
+  } else {
+    return (
+      <View style={cardStyle}>
+        {image && image.length > 0 ? (
+          <View style={[imageContainerStyle, imageContainerValidImageStyle]}>
+            <Image source={{ uri: image }} style={{ height: "100%", width: "auto" }} />
+          </View>
+        ) :
+          <View style={[imageContainerStyle, { justifyContent: "center", alignItems: "center" }]}>
+            <Text>No Cover Image Found</Text>
+          </View>
+        }
+        <View style={contentContainerStyle}>
+          <View style={labelContainerStyle}>
+            <Text style={labelStyle}>{label}</Text>
+            <Text style={statusStyle}>{status}</Text>
+          </View>
+          <View style={notificationContainerStyle}>
+            <Notification notificationCount={notificationCount ? notificationCount : 0} />
+          </View>
+        </View>
+      </View>
+    )
+  }
 }
 
 interface NotificationProps {
@@ -71,14 +93,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  cardStyleNewSet: {
+    opacity: 0.25,
+  },
   contentContainerStyle: {
     flex: 1
   },
   imageContainerStyle: {
-    borderRadius: 12,
     flex: 5,
+  },
+  imageContainerValidImageStyle: {
+    elevation: Platform.OS === "android" ? 20 : 0,
     overflow: "hidden",
-    elevation: Platform.OS === "android" ? 20 : 0
+    borderRadius: 12,
   },
   labelContainerStyle: {
     flex: 1,
