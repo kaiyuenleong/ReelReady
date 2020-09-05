@@ -1,18 +1,23 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import Gear from "../../assets/icons/gear.svg";
 
 interface HomeHeaderProps {
   username: string;
   onSeeAll: () => void;
+  onSettings: () => void;
 }
 
-const HomeHeader: React.FC<HomeHeaderProps> = ({ username, onSeeAll }) => {
+const HomeHeader: React.FC<HomeHeaderProps> = ({ username, onSeeAll, onSettings }) => {
   const { contentContainerStyle, subContainerStyle, welcomeTextStyle, selectSetTextStyle, seeAllTextStyle } = styles;
   
   return (
     <View style={contentContainerStyle}>
       <View style={subContainerStyle}>
         <Text style={welcomeTextStyle}>Welcome, {username}.</Text>
+        <TouchableOpacity onPress={onSettings}>
+          <Gear height={25} width={25} />
+        </TouchableOpacity>
       </View>
       <View style={subContainerStyle}>
         <Text style={selectSetTextStyle}>Select Set</Text>
@@ -33,6 +38,8 @@ const styles = StyleSheet.create({
   subContainerStyle: {
     flexDirection: "row",
     flex: 1,
+    justifyContent: "space-between",
+    alignItems: "flex-end"
   },
   welcomeTextStyle: {
     fontSize: 14,

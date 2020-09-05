@@ -11,6 +11,7 @@ import LoginScreen from "../screens/Login";
 
 // Authenticated Screens
 import HomeScreen from "../screens/Home";
+import SettingsScreen from "../screens/Settings";
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
@@ -37,6 +38,7 @@ class AppNavigator extends Component<AppNavigatorProps> {
 		return (
 			<RootStack.Navigator>
 				<RootStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+				<RootStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
 			</RootStack.Navigator>
 		)
 	}
